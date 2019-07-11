@@ -28,12 +28,12 @@ function! PythonSourceLines(lines)
     elseif exists("b:cmdline_jupyter")
 	" Use bracketed paste
 	let a:block = join(a:lines, b:cmdline_nl)
-python << endpython
-# Allow inner blocks to be run without problem (cpaste-like)
-import textwrap, json
-block = vim.eval('a:block')
-vim.command('let a:block = %s' % json.dumps(textwrap.dedent(block)))
-endpython
+"python << endpython
+"# Allow inner blocks to be run without problem (cpaste-like)
+"import textwrap, json
+"block = vim.eval('a:block')
+"vim.command('let a:block = %s' % json.dumps(textwrap.dedent(block)))
+"endpython
 	call VimCmdLineSendCmd("\e[200~")
         call VimCmdLineSendCmd(a:block)
         call VimCmdLineSendCmd("\e[201~")
