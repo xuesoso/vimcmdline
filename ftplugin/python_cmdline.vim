@@ -27,7 +27,7 @@ function! PythonSourceLines(lines)
         call VimCmdLineSendCmd(join(add(a:lines, '--'), b:cmdline_nl))
     elseif exists("b:cmdline_jupyter")
 	" Use bracketed paste
-	let a:block = join(a:lines, b:cmdline_nl)
+	let a_block = join(a:lines, b:cmdline_nl)
 "python << endpython
 "# Allow inner blocks to be run without problem (cpaste-like)
 "import textwrap, json
@@ -35,7 +35,7 @@ function! PythonSourceLines(lines)
 "vim.command('let a:block = %s' % json.dumps(textwrap.dedent(block)))
 "endpython
 	call VimCmdLineSendCmd("\e[200~")
-        call VimCmdLineSendCmd(a:block)
+        call VimCmdLineSendCmd(a_block)
         call VimCmdLineSendCmd("\e[201~")
 	call VimCmdLineSendCmd(b:cmdline_nl)
     else
