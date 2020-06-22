@@ -182,8 +182,8 @@ function VimCmdLineStart_Nvim(app)
     endif
     let g:cmdline_job[thisft] = termopen(a:app, {'on_exit': function('s:VimCmdLineJobExit')})
     let g:cmdline_termbuf[thisft] = bufname("%")
-    let &filetype = thisft
-    setlocal syntax=OFF
+    " let &filetype = thisft
+    " setlocal syntax=OFF
     if g:cmdline_esc_term
         tnoremap <buffer> <Esc> <C-\><C-n>
     endif
