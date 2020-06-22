@@ -161,8 +161,11 @@ endfunction
 
 " Run the interpreter in a Neovim terminal buffer
 function VimCmdLineStart_Nvim(app)
-    let edbuf = bufname("%")
+    let quitcmd = b:cmdline_quit_cmd
     let thisft = b:cmdline_filetype
+    let cmd_app = b:cmdline_app
+    let cmdline_nl = b:cmdline_nl
+    let edbuf = bufname("%")
     if g:cmdline_job[b:cmdline_filetype]
         return
     endif
@@ -182,8 +185,10 @@ function VimCmdLineStart_Nvim(app)
     endif
     let g:cmdline_job[thisft] = termopen(a:app, {'on_exit': function('s:VimCmdLineJobExit')})
     let g:cmdline_termbuf[thisft] = bufname("%")
-    " let &filetype = thisft
-    " setlocal syntax=OFF
+    let b:cmdline_filetype = thisft
+    let b:cmdline_quit_cmd = quitcmd
+    let b:cmdline_app = cmd_app
+    let b:cmdline_nl = cmdline_nl
     if g:cmdline_esc_term
         tnoremap <buffer> <Esc> <C-\><C-n>
     endif
