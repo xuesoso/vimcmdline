@@ -458,7 +458,7 @@ function! ExecuteCurrentCodeBlockJumpNext()
         let b:nextblock = b:nextblock
         let b:__nonextblock__ = 0
     endif
-    let b:lines = getline(b:lastblock, b:nextblock-1)
+    let b:lines = getline(b:lastblock+1, b:nextblock-1)
     call b:cmdline_source_fun(b:lines)
     if (b:__nonextblock__ == 0)
         exe b:nextblock+1
