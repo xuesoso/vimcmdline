@@ -413,6 +413,59 @@ function VimCmdLineSetApp(ftype)
     endif
 endfunction
 
+" Convenient functions to execute code block 
+" Code block is assumed to be separated by '#%%'.
+
+function! NextCodeBlock()
+    let b:nextblock = search('#%%', 'cWn')
+endfunction
+
+function! LastCodeBlock()
+    let b:lastblock = search('#%%', 'bcWn')
+endfunction
+
+function! ExecuteCurrentCodeBlock()
+    call NextCodeBlock()
+    call LastCodeBlock()
+    if (b:nextblock == 0)
+        let b:nextblock = line("$")
+    else
+        let b:nextblock = b:nextblock
+    endif
+    let b:lines = getline(b:lastblock+1, b:nextblock-1)
+    call b:cmdline_source_fun(b:lines)
+endfunction
+
+function! ExecuteToEndCodeBlock()
+    let b:last_codeline = line(".")
+    call NextCodeBlock()
+    if (b:nextblock == 0)
+        let b:nextblock = line("$")
+    else
+        let b:nextblock = b:nextblock
+    endif
+    let b:lines = getline(b:last_codeline, b:nextblock-1)
+    call b:cmdline_source_fun(b:lines)
+endfunction
+
+function! ExecuteCurrentCodeBlockJumpNext()
+    call LastCodeBlock()
+    call NextCodeBlock()
+    if (b:nextblock == 0)
+        let b:nextblock = line("$")
+        let b:__nonextblock__ = 1
+    else
+        let b:nextblock = b:nextblock
+        let b:__nonextblock__ = 0
+    endif
+    let b:lines = getline(b:lastblock, b:nextblock-1)
+    call b:cmdline_source_fun(b:lines)
+    if (b:__nonextblock__ == 0)
+        exe b:nextblock+1
+    endif
+endfunction
+
+
 " Default mappings
 if !exists("g:cmdline_map_start")
     let g:cmdline_map_start = "<LocalLeader>s"
