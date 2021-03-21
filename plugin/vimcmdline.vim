@@ -436,11 +436,11 @@ endfunction
 
 function! ToLastCodeBlock()
     call LastCodeBlock()
-    if (b:lastblock <= 1)
+    if (b:lastblock <= 2)
         let b:lastblock = 1
         exe b:lastblock
     else
-        exe b:lastblock-1
+        exe b:lastblock-2
     endif
 endfunction
 
