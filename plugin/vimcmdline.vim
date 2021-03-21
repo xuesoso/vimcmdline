@@ -424,6 +424,24 @@ function! LastCodeBlock()
     let b:lastblock = search('#%%', 'bcWn')
 endfunction
 
+function! ToNextCodeBlock()
+    call NextCodeBlock()
+    if (b:nextblock == 0)
+        let b:nextblock = line("$")
+        exe b:nextblock
+    else
+        exe b:nextblock+1
+    endif
+endfunction
+
+function! ToLastCodeBlock()
+    call LastCodeBlock()
+    if (b:lastblock == 0)
+        let b:lastblock = 1
+    endif
+    exe b:lastblock
+endfunction
+
 function! ExecuteCurrentCodeBlock()
     call NextCodeBlock()
     call LastCodeBlock()
@@ -450,19 +468,9 @@ endfunction
 
 function! ExecuteCurrentCodeBlockJumpNext()
     call LastCodeBlock()
-    call NextCodeBlock()
-    if (b:nextblock == 0)
-        let b:nextblock = line("$")
-        let b:__nonextblock__ = 1
-    else
-        let b:nextblock = b:nextblock
-        let b:__nonextblock__ = 0
-    endif
+    call ToNextCodeBlock()
     let b:lines = getline(b:lastblock+1, b:nextblock-1)
     call b:cmdline_source_fun(b:lines)
-    if (b:__nonextblock__ == 0)
-        exe b:nextblock+1
-    endif
 endfunction
 
 
