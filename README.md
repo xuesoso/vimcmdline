@@ -65,6 +65,7 @@ let cmdline_map_quit           = '<LocalLeader>q'
 
 " vimcmdline options
 let cmdline_vsplit      = 1      " Split the window vertically
+let cmdline_split_topleft   = 1  " Split the window vertically and place it on the top left
 let cmdline_esc_term    = 1      " Remap <Esc> to :stopinsert in Neovim's terminal
 let cmdline_in_buffer   = 1      " Start the interpreter in a Neovim's terminal
 let cmdline_term_height = 15     " Initial height of interpreter window or pane

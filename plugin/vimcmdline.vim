@@ -29,6 +29,7 @@ endif
 
 " Set other options
 let g:cmdline_vsplit = get(g:, 'cmdline_vsplit', 0)
+let g:cmdline_split_topleft = get(g:, 'cmdline_split_topleft', 0)
 let g:cmdline_esc_term = get(g:, 'cmdline_esc_term', 1)
 let g:cmdline_term_width = get(g:, 'cmdline_term_width', 40)
 let g:cmdline_term_height = get(g:, 'cmdline_term_height', 15)
@@ -172,9 +173,17 @@ function VimCmdLineStart_Nvim(app)
     set switchbuf=useopen
     if g:cmdline_vsplit
         if g:cmdline_term_width > 16 && g:cmdline_term_width < (winwidth(0) - 16)
-            silent exe "belowright " . g:cmdline_term_width . "vnew"
+            if g:cmdline_split_topleft
+                silent exe "topleft " . g:cmdline_term_width . "vnew"
+            else
+                silent exe "belowright " . g:cmdline_term_width . "vnew"
+            endif
         else
-            silent belowright vnew
+            if g:cmdline_split_topleft
+                silent topleft vnew
+            else
+                silent belowright vnew
+            endif
         endif
     else
         if g:cmdline_term_height > 6 && g:cmdline_term_height < (winheight(0) - 6)
