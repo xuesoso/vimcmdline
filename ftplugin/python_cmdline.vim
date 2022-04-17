@@ -23,21 +23,16 @@ endif
 function! PythonSourceLines(lines)
     if exists("b:cmdline_ipython")
         call VimCmdLineSendCmd("%cpaste -q")
-        sleep 100m " Wait for IPython to read stdin
+        sleep 50m " Wait for IPython to read stdin
         call VimCmdLineSendCmd(join(add(a:lines, '--'), b:cmdline_nl))
     elseif exists("b:cmdline_jupyter")
-	" Use bracketed paste
-	let a_block = join(a:lines, b:cmdline_nl)
-"python << endpython
-"# Allow inner blocks to be run without problem (cpaste-like)
-"import textwrap, json
-"block = vim.eval('a:block')
-"vim.command('let a:block = %s' % json.dumps(textwrap.dedent(block)))
-"endpython
-	call VimCmdLineSendCmd("\e[200~")
+        " Use bracketed paste
+        let a_block = join(a:lines, b:cmdline_nl)
+        call VimCmdLineSendCmd("\e[200~")
         call VimCmdLineSendCmd(a_block)
         call VimCmdLineSendCmd("\e[201~")
-	call VimCmdLineSendCmd(b:cmdline_nl)
+        sleep 50m " Wait for console to read stdin
+        call VimCmdLineSendCmd(b:cmdline_nl)
     else
         call VimCmdLineSendCmd(join(add(a:lines, ''), b:cmdline_nl))
     endif
