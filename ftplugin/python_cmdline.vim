@@ -61,6 +61,7 @@ function! PythonSendLine()
     if strlen(line) > 0 || b:cmdline_send_empty
         call VimCmdLineSendCmd(line)
     endif
+    sleep 50m "Wait for console to read stdin"
     call VimCmdLineDown()
 endfunction
 
