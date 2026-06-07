@@ -36,7 +36,7 @@ let g:cmdline_term_height = get(g:, 'cmdline_term_height', 15)
 let g:cmdline_tmp_dir = get(g:, 'cmdline_tmp_dir', '/tmp/cmdline_' . localtime() . '_' . $USER)
 let g:cmdline_outhl = get(g:, 'cmdline_outhl', 1)
 let g:cmdline_auto_scroll = get(g:, 'cmdline_auto_scroll', 1)
-let g:cmdline_block_sep = get(g:, 'cmdline_block_sep', '#%%')
+let g:cmdline_block_sep = get(g:, 'cmdline_block_sep', '# %%')
 
 " Internal variables
 let g:cmdline_job = {}
@@ -425,7 +425,7 @@ endfunction
 
 " Convenient functions to execute code block
 " Code block is assumed to be separated by the string defined in
-" g:cmdline_block_sep (default: '#%%').
+" g:cmdline_block_sep (default: '# %%').
 
 function! NextCodeBlock()
     let b:nextblock = search(g:cmdline_block_sep, 'cWn')
