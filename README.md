@@ -73,6 +73,7 @@ let cmdline_term_width  = 80     " Initial width of interpreter window or pane
 let cmdline_tmp_dir     = '/tmp' " Temporary directory to save files
 let cmdline_outhl       = 1      " Syntax highlight the output
 let cmdline_auto_scroll = 1      " Keep the cursor at the end of terminal (nvim)
+let cmdline_block_sep   = '#%%'  " Separator delimiting code blocks
 ```
 
 You can also define what application will be run as the interpreter for each
